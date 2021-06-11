@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 const helpers = require('./utils/helpers');
-//const routes = require('./controllers');
+const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const session = require('express-session');
 
@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(routes);
+app.use(routes);
 
 // sync sequelize models to the database, then turn on the server
 sequelize.sync({ force: false }).then(() => {
