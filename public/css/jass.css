@@ -1009,6 +1009,7 @@ a:hover {
 }
 
 .btn.btn-primary {
+  text-align: stretch;
   background-color: #2d3e50;
   color: #d9e9e8;
 }
