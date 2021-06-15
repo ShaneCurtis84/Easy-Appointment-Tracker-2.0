@@ -11,6 +11,9 @@ router.post('/', async (request, response) => {
     });
 
     request.session.save(() => {
+      request.session.user_id = dbUserData.id;
+      request.session.username = dbUserData.username;
+      request.session.email = dbUserData.email;
       request.session.loggedIn = true;
       response.status(200).json(dbUserData);
     });
@@ -41,6 +44,9 @@ router.post('/login', async (request, response) => {
     }
 
     request.session.save(() => {
+      request.session.user_id = dbUserData.id;
+      request.session.username = dbUserData.username;
+      request.session.email = dbUserData.email;
       request.session.loggedIn = true;
       response.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
     });
