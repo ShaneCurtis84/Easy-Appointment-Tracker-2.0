@@ -1,8 +1,4 @@
 // VARIABLES
-var body = document.querySelector("body");
-var mainSection = document.querySelector("main");
-var appointmentEntrySection = document.querySelector(".create-appointment-entry");
-var appointmentEntryButton = document.querySelector(".create-appointment-entry-button");
 var appointmentDateSection = document.querySelector(".appointment-date");
 var appointmentDetailsSection = document.querySelector(".appointment-details");
 
@@ -26,16 +22,7 @@ var monthsArray = moment.months();
 var daysArray = [];
 var hoursArray = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",];
 var minutesArray = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55",];
-var appointmentDate,
-    appointmentStartTime,
-    currentMonthIndex,
-    dayOfWeek,
-    dateChosen,
-    formattedDate,
-    formattedMonth,
-    monthChosen,
-    monthChosenNumber,
-    userName;
+var appointmentDate, appointmentStartTime, currentMonthIndex, dayOfWeek, dateChosen, formattedDate, formattedMonth, monthChosen, monthChosenNumber;
 
 currentMonthIndex = monthsArray.indexOf(currentMonth);
 appointmentDetails = [];
@@ -43,34 +30,38 @@ appointmentDetails = [];
 // Function flow of EATen code
 //loadAppointmentDetails--> onLoad -->startEntry -->monthSelected -->dateSelected -->hourSelectd -->minuteSelected -->
 // setupAppointmentEntry -->createAppointmentEntry -->addNewAppointment-->
+const buildButtons = async (itemArray, item=`item`, dataItem=`data-item`, itemSelected, itemArticle, valueAmount, additionalClass) => {
+    for (i = 0; i < itemArray.length; i++) {
+        const itemValue = itemArray[i];
+        const itemButton = document.createElement("button");
+        itemButton.setAttribute("class", `${item} button is-link mx-1 mt-3 ${additionalClass}`);
+        itemButton.setAttribute(`${dataItem}`, itemValue);
+        itemButton.setAttribute("id", itemValue);
+        itemButton.textContent = itemValue;
+        itemButton.addEventListener("click", itemSelected);
+        itemArticle.append(itemButton);
+
+        numberOfElementsShown(itemButton, valueAmount);
+    }
+};
+
+// Function to highlight the button of the current month
+function itemButtonHighlight(itemButtonSelect, itemIndex, item) {
+    itemButtonSelect[itemIndex].setAttribute("class", `${item} button is-8 is-warning mx-1 mt-3`);
+}
 
 // When the Create Appointment Entry Button is clicked, a list of months will be displayed
-function startEntry() {
-    appointmentDateSection.setAttribute("class", "appointment-date box is-block mx-3");
-
+const startEntry = async () => {
     // Creating the month buttons and appending it all to the month article
-    for (i = 0; i < monthsArray.length; i++) {
-        var monthValue = monthsArray[i];
-        var monthButton = document.createElement("button");
+    buildButtons(monthsArray, item=`month`, dataItem=`data-month`, monthSelected, monthArticle, 12);
 
-        monthButton.setAttribute("class", "month button is-link mx-1 mt-3");
-        monthButton.setAttribute("data-month", monthValue);
-        monthButton.setAttribute("id", monthValue);
-        monthButton.textContent = monthValue;
-        monthArticle.append(monthButton);
-    }
-    var numberOfMonthButtons = appointmentDateSection.querySelectorAll(".month");
-    numberOfElementsShown(numberOfMonthButtons, 12);
     // Attaching click event to current and future months in the year. The past month buttons are disabled
     var monthButtonSelect = monthArticle.querySelectorAll("button");
-    for (i = currentMonthIndex; i < monthButtonSelect.length; i++) {
-        monthButtonSelect[i].addEventListener("click", monthSelected);
-    }
     for (i = currentMonthIndex - 1; i > -1; i--) {
         monthButtonSelect[i].setAttribute("title", "Disabled button");
         monthButtonSelect[i].setAttribute("disabled", "");
     }
-    monthButtonHighlight(monthButtonSelect, currentMonthIndex);
+    itemButtonHighlight(monthButtonSelect, currentMonthIndex, item=`month`);
 }
 
 // Once the month is selected by the user, a list of days for that month will be displayed
@@ -86,22 +77,20 @@ function monthSelected() {
     for (i = 0; i < monthsArray.length; i++) {
         monthButtonSelect[i].setAttribute("class", "month button is-link mx-1 mt-3");
         monthButtonSelect[currentMonthIndex].setAttribute("class", "month button is-link mx-1 mt-3");
-        monthButtonHighlight(monthButtonSelect, monthChosenIndex);
+        itemButtonHighlight(monthButtonSelect, monthChosenIndex);
     }
     monthChosenNumber = monthChosenIndex + 1;
 
     daysArray = [];
     getDaysArrayByMonth(currentYear, monthChosenNumber);
+
+    // When the user selects a month, only the dates for that month will be shown - the dates for the previous month selected will be removed i.e. the number of buttons will equal the number of days in the month selected
+    formattedMonth = ("0" + monthChosenNumber).slice(-2);
+    const numberOfDaysInMonthChosen = moment(currentYear + "-" + formattedMonth).daysInMonth();
+    // numberOfElementsShown(dayButtonSelect, numberOfDaysInMonthChosen);
+
     // Creating the day buttons and appending it all to the day article
-    for (i = 0; i < daysArray.length; i++) {
-        var dayValue = daysArray[i];
-        var dayButton = document.createElement("button");
-        dayButton.setAttribute("class", "day button is-link is-outlined mx-1 mt-3");
-        dayButton.setAttribute("data-day", dayValue);
-        dayButton.textContent = dayValue;
-        dayButton.addEventListener("click", dateSelected);
-        dayArticle.append(dayButton);
-    }
+    buildButtons(daysArray, item=`day`, dataItem=`data-day`, dateSelected, dayArticle, numberOfDaysInMonthChosen, additionalClass=`is-outlined`);
 
     var dayButtonSelect = appointmentDateSection.querySelectorAll(".day");
     // Get the current day and disable those days in the past
@@ -113,10 +102,7 @@ function monthSelected() {
         }
     }
 
-    // When the user selects a month, only the dates for that month will be shown - the dates for the previous month selected will be removed i.e. the number of buttons will equal the number of days in the month selected
-    formattedMonth = ("0" + monthChosenNumber).slice(-2);
-    var numberOfDaysInMonthChosen = moment(currentYear + "-" + formattedMonth).daysInMonth();
-    numberOfElementsShown(dayButtonSelect, numberOfDaysInMonthChosen);
+
 }
 
 // Once the day is selected, an option to add the time will be displayed
@@ -124,17 +110,15 @@ function dateSelected() {
     dateChosen = this.getAttribute("data-day");
     var hourButton, pItem;
     // Ensure Minutes are cleared from any previous months
-    var minutesSectionExists = appointmentDateSection.querySelectorAll(".minute");
-    numberOfElementsShown(minutesSectionExists, 0);
-    var minutesSectionExists = appointmentDateSection.querySelectorAll("p");
-    numberOfElementsShown(minutesSectionExists, 0);
+    // var minutesSectionExists = appointmentDateSection.querySelectorAll(".minute");
+    // numberOfElementsShown(minutesSectionExists, 0);
 
     var dayChosenIndex = daysArray.indexOf(dateChosen);
     var dayButtonSelect = appointmentDateSection.querySelectorAll(".day");
     // Changing the selected day button colour when clicked
     for (i = 0; i < daysArray.length; i++) {
         dayButtonSelect[i].setAttribute("class", "day button is-link is-outlined mx-1 mt-3");
-        dayButtonSelect[dayChosenIndex].setAttribute("class", "day button is-8 is-warning mx-1 mt-3");
+        itemButtonHighlight(dayButtonSelect, dayChosenIndex, item=`day`);
     }
 
     hourArticle.setAttribute("class", "appointment-hour has-text-centered is-block mb-3");
@@ -145,15 +129,7 @@ function dateSelected() {
     hourArticle.append(pItem);
 
     // Creating the hour buttons and appending it all to the hour article
-    for (i = 0; i < hoursArray.length; i++) {
-        hourButton = document.createElement("button");
-        hourButton.setAttribute("class", "hour button is-link mx-1 mt-3");
-        hourButton.setAttribute("data-hour", hoursArray[i]);
-        hourButton.setAttribute("id", hoursArray[i]);
-        hourButton.textContent = hoursArray[i];
-        hourButton.addEventListener("click", hourSelected);
-        hourArticle.append(hourButton);
-    }
+    buildButtons(hoursArray, item=`hour`, dataItem=`data-hour`, hourSelected, hourArticle, 0);
 
     // Preventing the hour button and hour paragraph elements from being duplicated when the day is clicked on again by the user
     var hourButtonSelect = appointmentDateSection.querySelectorAll(".hour");
@@ -200,15 +176,8 @@ function hourSelected() {
     pItem.textContent = "Minutes:";
     minuteArticle.append(pItem);
     // Creating the minute buttons and appending it all to the minute article
-    for (i = 0; i < minutesArray.length; i++) {
-        minuteButton = document.createElement("button");
-        minuteButton.setAttribute("class", "minute button is-link mx-1 mt-3");
-        minuteButton.setAttribute("data-minute", minutesArray[i]);
-        minuteButton.setAttribute("id", minutesArray[i]);
-        minuteButton.textContent = minutesArray[i];
-        minuteButton.addEventListener("click", minuteSelected);
-        minuteArticle.append(minuteButton);
-    }
+    buildButtons(minutesArray, item=`minute`, dataItem=`data-minute`, minuteSelected, minuteArticle);
+
     var minuteButtonSelect = appointmentDateSection.querySelectorAll(".minute");
 
     if (currentMonthIndex === monthsArray.indexOf(monthChosen)) {
@@ -366,10 +335,6 @@ function numberOfElementsShown(elementSelect, numberOfElements) {
     }
 }
 
-// Function to highlight the button of the current month
-function monthButtonHighlight(monthButtonSelect, monthIndex) {
-    monthButtonSelect[monthIndex].setAttribute("class", "month is-8 button is-warning mx-1 mt-3");
-}
 // Function to clear the date and time buttons
 function clearButtons() {
     var dayButtonSelect = appointmentDateSection.querySelectorAll(".day");
@@ -382,18 +347,6 @@ function clearButtons() {
     numberOfElementsShown(minutesSectionExists, 0);
     var buttonSelect = appointmentDateSection.querySelectorAll(".next");
     numberOfElementsShown(buttonSelect, 0);
-}
-
-// Function to run when the webpage loads - user will see the Create Appointment Entry button on the top of the page below the header
-function onLoad() {
-    mainSection.setAttribute("style", "margin-top: 2rem; margin-bottom: 2rem; min-height: 81vh;");
-    clearButtons();
-
-    // On page load, user view is scrolled to the top of the web page
-    setTimeout(function () {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }, 400);
 }
 
 startEntry();

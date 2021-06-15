@@ -1,70 +1,71 @@
 <section>
-<section class="appointment-date box">
-    <progress class="progress is-info" value="0" max="100">0%</progress>
-    <p class="center">Select the month:</p>
-    <article class="months is-flex is-flex-wrap-wrap is-justify-content-center">
-        <!-- The month buttons will be added here from JavaScript -->
-    </article>
-    <article class="days is-flex is-flex-wrap-wrap is-justify-content-center column is-10 is-offset-1">
-        <!-- The day buttons will be added here from JavaScript -->
-    </article>
-    <article class="appointment-hour is-flex is-flex-wrap-wrap is-justify-content-center mt-4">
-        <!-- The hour input field will be added here from JavaScript -->
-    </article>
-    <article class="appointment-minute is-flex is-flex-wrap-wrap is-justify-content-center mt-4">
-        <!-- The minute input field will be added here from JavaScript -->
-    </article>
-    <article class="date-description mt-4">
-        <!-- Date the user has chosen for the appointment will be displayed in this article -->
-    </article>
-</section>
-<!-- This section below deals with user inputting the details of the appointments beyond date -->
-<section class="appointment-details box is-block mx-3 is-hidden">
-    <progress class="progress is-info" value="50" max="100">50%</progress>
-    <h3 class="has-text-grey-dark is-size-3">Appointment Information:</h3>
-    <form>
-        <div class="is-size-5 field">
-            <label class="has-text-weight-semibold label" for="appointment-name-input">Appointment For Whom:</label>
-            <div class="control has-icons-left">
-                <input type="text" class="input" id="appointment-name-input" name="appointment-name-input" placeholder="Enter Who the Appointment is For">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
+    <section class="appointment-date box is-block mx-3">
+        <progress class="progress is-info" value="0" max="100">0%</progress>
+        <p class="center">Select the month:</p>
+        <article class="months is-flex is-flex-wrap-wrap is-justify-content-center">
+            <!-- The month buttons will be added here from JavaScript -->
+        </article>
+        <article class="days is-flex is-flex-wrap-wrap is-justify-content-center column is-10 is-offset-1">
+            <!-- The day buttons will be added here from JavaScript -->
+        </article>
+        <article class="appointment-hour is-flex is-flex-wrap-wrap is-justify-content-center mt-4">
+            <!-- The hour input field will be added here from JavaScript -->
+        </article>
+        <article class="appointment-minute is-flex is-flex-wrap-wrap is-justify-content-center mt-4">
+            <!-- The minute input field will be added here from JavaScript -->
+        </article>
+        <article class="date-description mt-4">
+            <!-- Date the user has chosen for the appointment will be displayed in this article -->
+        </article>
+    </section>
+    <!-- This section below deals with user inputting the details of the appointments beyond date -->
+    <section class="appointment-details box is-block mx-3 is-hidden">
+        <progress class="progress is-info" value="50" max="100">50%</progress>
+        <h3 class="has-text-grey-dark is-size-3">Appointment Information:</h3>
+        <form>
+            <div class="is-size-5 field">
+                <label class="has-text-weight-semibold label" for="appointment-name-input">Appointment For Whom:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="appointment-name-input" name="appointment-name-input" placeholder="Enter Who the Appointment is For">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-        <div class="is-size-5 my-4 field">
-            <label class="has-text-weight-semibold label" for="person-appointment-with">Appointment With:</label>
-            <div class="control has-icons-left">
-                <input type="text" class="input" id="person-appointment-with" name="person-appointment-with" placeholder="Enter Who the Appointment is With">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="person-appointment-with">Appointment With:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="person-appointment-with" name="person-appointment-with" placeholder="Enter Who the Appointment is With">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-        <div class="is-size-5 my-4 field">
-            <label class="has-text-weight-semibold label" for="appointment-location">Appointment Location:</label>
-            <div class="control has-icons-left">
-                <input type="text" class="input" id="appointment-location" name="appointment-location" placeholder="Enter Address of Appointment">
-                <span class="icon is-small is-left">
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-location">Appointment Location:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="appointment-location" name="appointment-location" placeholder="Enter Address of Appointment">
+                    <span class="icon is-small is-left">
                         <i class="fas fa-map-marker"></i>
-                </span>
+                    </span>
+                </div>
             </div>
-        </div>
-        <div id="map"></div>
-        <div class="is-size-5 my-4 field">
-            <label class="has-text-weight-semibold label" for="notes">Notes:</label>
-            <textarea type="text" class="textarea" id="notes" name="notes" placeholder="Notes"></textarea>
-        </div>
-        <input class="submit-appointment button is-success mt-3 px-5" type="submit" value="Submit">
-        <div class="error-message notification is-danger my-4 is-hidden">
-            Enter details for:
-            <ul class="error"></ul>
-        </div>
-    </form>
-</section>
+            <div id="map"></div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="notes">Notes:</label>
+                <textarea type="text" class="textarea" id="notes" name="notes" placeholder="Notes"></textarea>
+            </div>
+            <input class="submit-appointment button is-success mt-3 px-5" type="submit" value="Submit">
+            <div class="error-message notification is-danger my-4 is-hidden">
+                Enter details for:
+                <ul class="error"></ul>
+            </div>
+        </form>
+    </section>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC856BBT5rwwkraEtK2Ki5obfAUgw1M2KQ&libraries=places&v=weekly"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC856BBT5rwwkraEtK2Ki5obfAUgw1M2KQ&libraries=places&v=weekly"></script>
 <script src="/../js/googleMapsAPi.js"></script>
 <script src="/../js/add-new-appointment.js"></script>
