@@ -12,10 +12,6 @@ var minuteArticle = document.querySelector(".appointment-minute");
 var monthArticle = document.querySelector(".months");
 
 var dateParagraphContainer = document.querySelector(".date-description");
-var userNameInput = document.getElementById("username-input");
-var appointmentForInput = document.getElementById("appointment-name-input");
-var appointmentWithInput = document.getElementById("person-appointment-with");
-var addressInput = document.getElementById("appointment-location");
 
 // Using moment.js for the dates - year, month and day
 var m = moment();
@@ -32,9 +28,6 @@ var hoursArray = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "1
 var minutesArray = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55",];
 var appointmentDate,
     appointmentStartTime,
-    appointmentWith,
-    appointmentWhom,
-    appointmentAddress,
     currentMonthIndex,
     dayOfWeek,
     dateChosen,
@@ -53,9 +46,6 @@ appointmentDetails = [];
 
 // When the Create Appointment Entry Button is clicked, a list of months will be displayed
 function startEntry() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    // appointmentEntrySection.setAttribute("class", "is-hidden");
     appointmentDateSection.setAttribute("class", "appointment-date box is-block mx-3");
 
     // Creating the month buttons and appending it all to the month article
@@ -279,66 +269,76 @@ function nextButtonCreate() {
 }
 
 /* FUNCTION FOR THE SECOND STEP IN THE CREATE APPOINTMENT PROCESS */
-function setupAppointmentEntry() {
-    userNameInput.value = "";
+const setupAppointmentEntry = async () => {
+    console.log("next button clicked");
+
+    const appointmentForInput = document.getElementById("appointment-name-input");
+    const appointmentWithInput = document.getElementById("person-appointment-with");
+    const addressInput = document.getElementById("appointment-location");
+    const notesInput = document.getElementById("notes");
+
     appointmentForInput.value = "";
     appointmentWithInput.value = "";
     addressInput.value = "";
+    notesInput.value = "";
     appointmentDateSection.setAttribute("class", "is-hidden");
     appointmentDetailsSection.setAttribute("class", "appointment-details box is-block mx-3");
-    var submitAppointmentEntryButton = document.querySelector(".submit-appointment");
-    submitAppointmentEntryButton.addEventListener("click", createAppointmentEntry);
+    const submitAppointmentEntryButton = document.querySelector(".submit-appointment");
+    submitAppointmentEntryButton.addEventListener("click", addAppointmentFormHandler);
 }
 
-function createAppointmentEntry(event) {
+const addAppointmentFormHandler = async (event) => {
     event.preventDefault();
-    userName = userNameInput.value;
-    appointmentWhom = appointmentForInput.value;
-    appointmentWith = appointmentWithInput.value;
-    appointmentAddress = addressInput.value;
+    const appointmentForInput = document.getElementById("appointment-name-input");
+    const appointmentWithInput = document.getElementById("person-appointment-with");
+    const addressInput = document.getElementById("appointment-location");
+    const notesInput = document.getElementById("notes");
 
-    if (userNameInput && userName && appointmentForInput && appointmentWhom && appointmentWithInput && appointmentWith && addressInput && appointmentAddress) {
-        var newAppointmentDetails = {
-            name: userName,
-            appointmentDate: appointmentDate,
-            appointmentStartTime: appointmentStartTime,
-            appointmentWhom: appointmentWhom,
-            appointmentWith: appointmentWith,
-            appointmentAddress: appointmentAddress,
-        };
-        appointmentDetails.push(newAppointmentDetails);
-        saveAppointmentDetails();
-        onLoad();
-        if (userName && appointmentDate && appointmentStartTime && appointmentWhom && appointmentWith && appointmentAddress) {
-            renderAppointments();
-            var ifNoAppointments = document.getElementById("no-appointments");
-            if (ifNoAppointments) {
-                ifNoAppointments.parentNode.remove();
-            }
+    const appointmentDate = currentYear + ("0" + monthChosenNumber).slice(-2) + ("0" + dateChosen).slice(-2);
+    const appointmentTime = hourChosen + minuteChosen;
+    const appointmentWhom = appointmentForInput.value;
+    const appointmentWith = appointmentWithInput.value;
+    const appointmentAddress = addressInput.value;
+    const notesValue = notesInput.value;
+
+    // console.log('appointmentDate', appointmentDate);
+    // console.log('appointmentTime', appointmentTime);
+    // console.log('appointmentWhom', appointmentWhom);
+    // console.log('appointmentWith', appointmentWith);
+    // console.log('appointmentAddress', appointmentAddress);
+    // console.log('notesValue', notesValue);
+
+    if (appointmentForInput && appointmentWhom && appointmentWithInput && appointmentWith && addressInput && appointmentAddress) {
+        console.log("if statement entered");
+        const response = await fetch('/api/appointments', {
+            method: 'POST',
+            body: JSON.stringify({ appointmentDate, appointmentTime, appointmentWhom, appointmentWith, appointmentAddress, notesValue }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        // Redirecting user to the dashboard if response is ok
+        if (response.ok) {
+            document.location.replace('/dashboard');
+        } else {
+            const error = `<p>*Failed to create appointment</p>`;
+            document.querySelector('.error-message').innerHTML = error;
         }
     } else {
-        var errorMessage = document.querySelectorAll(".error");
+        const errorMessage = document.querySelector(".error");
         numberOfElementsShown(errorMessage, 0);
-        var errorMessageText = "Enter details for ";
-        if (!userName) {
-            errorMessageText = errorMessageText + "Name, ";
-        }
+        let errorMessageListItem;
         if (!appointmentWhom) {
-            errorMessageText = errorMessageText + "Who the Appointment is for, ";
+            errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment For Whom</li>`: errorMessageListItem = `<li>• Appointment For Whom</li>`;
         }
         if (!appointmentWith) {
-            errorMessageText = errorMessageText + "Who the Appointment is with, ";
+            errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment With</li>` : errorMessageListItem = `<li>• Appointment With</li>`;
         }
         if (!appointmentAddress) {
-            errorMessageText = errorMessageText + "the address of the Appointment";
+            errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment Location</li>`: errorMessageListItem = `<li>• Appointment Location</li>`;
         }
 
-        errorMessageText = errorMessageText.replace(/,\s*$/, "");
-
-        var pItem = document.createElement("p");
-        pItem.textContent = errorMessageText;
-        pItem.setAttribute("class", "error notification is-danger");
-        appointmentDetailsSection.append(pItem);
+        const errorMessageSection = document.querySelector('.error-message');
+        errorMessageSection.setAttribute('class', 'error-message notification is-danger my-4 is-block');
+        errorMessage.innerHTML = errorMessageListItem;
     }
 }
 
@@ -384,15 +384,8 @@ function clearButtons() {
     numberOfElementsShown(buttonSelect, 0);
 }
 
-// // Click event attached to the Create Appointment Entry button
-// appointmentEntryButton.addEventListener("click", startEntry);
-
 // Function to run when the webpage loads - user will see the Create Appointment Entry button on the top of the page below the header
 function onLoad() {
-    // appointmentEntrySection.setAttribute("class", "create-appointment-entry has-text-centered mb-5 p-4");
-    // appointmentEntryButton.setAttribute("class", "create-appointment-entry-button button is-link is-size-4 my-5 p-5");
-    // appointmentDateSection.setAttribute("class", "is-hidden");
-    // appointmentDetailsSection.setAttribute("class", "is-hidden");
     mainSection.setAttribute("style", "margin-top: 2rem; margin-bottom: 2rem; min-height: 81vh;");
     clearButtons();
 
@@ -402,5 +395,7 @@ function onLoad() {
         document.documentElement.scrollTop = 0;
     }, 400);
 }
-// loadAppointmentDetails();
+
 startEntry();
+
+

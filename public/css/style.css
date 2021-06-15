@@ -153,3 +153,30 @@ img {
 /* .appointment-hour button, .appointment-minute button {
   font-family: 'Orbitron', sans-serif;
 } */
+
+/* Google Map */
+/* Always set the map height explicitly to define the size of the div element that contains the map. */
+#map {
+  border: 1px solid #52525262;
+  border-radius: 0.2rem;
+  height: 400px;
+}
+
+/* Google Maps Autocomplete search styling */
+.pac-icon {
+  display: none;
+}
+
+.pac-item {
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.pac-item:hover {
+  background-color: #ececec;
+}
+
+.pac-item-query {
+  font-size: 16px;
+}
