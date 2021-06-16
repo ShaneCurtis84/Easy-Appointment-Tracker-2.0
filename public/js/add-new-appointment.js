@@ -228,6 +228,23 @@ const setupAppointmentEntry = async () => {
     submitAppointmentEntryButton.addEventListener("click", addAppointmentFormHandler);
 }
 
+const successMessage = async () => {
+    appointmentDetailsSection.setAttribute("class", "appointment-details box is-block mx-3 is-hidden");
+    appointmentDateSection.setAttribute("class", "appointment-date box is-block mx-3 is-hidden");
+    let successMessageSection = document.querySelector(".success-message");
+    successMessageSection.setAttribute("class", "success-message box is-block has-text-centered mx-3 notification is-success");
+}
+
+// Directs user to particular page depending on the button they click
+document.querySelector(".new-appointment").addEventListener("click", async (event) => {
+    event.preventDefault();
+    document.location.replace('/appointment/new');
+})
+document.querySelector(".dashboard").addEventListener("click", async (event) => {
+    event.preventDefault();
+    document.location.replace('/dashboard');
+})
+
 const addAppointmentFormHandler = async (event) => {
     event.preventDefault();
     const appointmentForInput = document.getElementById("appointment-name-input");
@@ -249,9 +266,9 @@ const addAppointmentFormHandler = async (event) => {
             body: JSON.stringify({ appointmentDate, appointmentTime, appointmentWhom, appointmentWith, appointmentAddress, notesValue }),
             headers: { 'Content-Type': 'application/json' },
         });
-        // Redirecting user to the dashboard if response is ok
+        // Invoke the successMessage function if the response is ok
         if (response.ok) {
-            document.location.replace('/dashboard');
+            successMessage();
         } else {
             const error = `<p>*Failed to create appointment</p>`;
             document.querySelector('.error-message').innerHTML = error;
