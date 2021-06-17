@@ -70,8 +70,10 @@ router.get('/view-appointments', withAuth, async (request, response) => {
       if (searchAppntForWhom != '') {
         appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
       }
-    } else {
+    }else if (searchAppntForWhom != ''){
       appointmentsFiltered = dbAppointmentData.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
+    }else {
+      appointmentsFiltered = dbAppointmentData;
     }
 
     const appointments = appointmentsFiltered.sort((firstAppnt, secondAppnt) => new Date(firstAppnt.appnt_date) - new Date(secondAppnt.appnt_date)).map((appointmentData) =>

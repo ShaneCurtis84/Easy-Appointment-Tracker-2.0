@@ -12,9 +12,8 @@ const searchAppointmentsFormHandler = async (event) => {
 
     if (searchDateFrom !== '') {
         if (searchDateTo === '') {
-            searchDateTo = year + '-' + month + '-' + day;
+            searchDateTo = (year +1) + '-' + month + '-' + day;
         }
-        searchDateFrom = year + '-' + month + '-' + day;
     }
 
     if (searchDateTo !== '') {
