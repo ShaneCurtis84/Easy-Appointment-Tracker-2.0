@@ -32,7 +32,22 @@ router.get('/search-appointments', withAuth, async (request, response) => {
   console.log('Appointment Routes -search appointment');
   try {
 
+    const dbAppointmentData = await Appointment.findAll({
+      attributes: ['appnt_for_whom']
+    });
+
+    const appointments = dbAppointmentData.map((appointmentData) =>
+      appointmentData.get({ plain: true })
+    );
+
+    const appointmentsForWhomUnique = [... new Set(appointments.map((appointmentData) =>
+      appointmentData.appnt_for_whom
+    ))];
+
+    appointmentsForWhomUnique.sort();
+
     response.render('search-appointments', {
+      appointmentsForWhomUnique,
       loggedIn: request.session.loggedIn,
     });
 
@@ -41,19 +56,29 @@ router.get('/search-appointments', withAuth, async (request, response) => {
   }
 });
 router.get('/view-appointments', withAuth, async (request, response) => {
+  console.log('Appointment Routes - view appointment ', request.query);
   try {
     const dbAppointmentData = await Appointment.findAll({
     });
     const searchDateFrom = request.query.startDate;
     const searchDateTo = request.query.endDate;
+    const searchAppntForWhom = request.query.appntForWhom;
 
-    const appointmentsFiltered = dbAppointmentData.filter(appntDate => appntDate.appnt_date >= searchDateFrom && appntDate.appnt_date <= searchDateTo);
+    let appointmentsFiltered = {};
+    if (searchDateFrom !== '') {
+      appointmentsFiltered = dbAppointmentData.filter(appntDate => appntDate.appnt_date >= searchDateFrom && appntDate.appnt_date <= searchDateTo);
+      if (searchAppntForWhom != '') {
+        appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
+      }
+    } else {
+      appointmentsFiltered = dbAppointmentData.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
+    }
 
-    const appointments = appointmentsFiltered.sort((a,b) => new Date(a.appnt_date) - new Date(b.appnt_date)).map((appointmentData) =>
-    appointmentData.get({ plain: true }));
+    const appointments = appointmentsFiltered.sort((firstAppnt, secondAppnt) => new Date(firstAppnt.appnt_date) - new Date(secondAppnt.appnt_date)).map((appointmentData) =>
+      appointmentData.get({ plain: true }));
 
-    response.render('appointment', {appointments, loggedIn: request.session.loggedIn, });
-    
+    response.render('appointment', { appointments, loggedIn: request.session.loggedIn, });
+
   } catch (error) {
     response.status(500).json(error);
   }

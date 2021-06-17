@@ -11,6 +11,24 @@ const appointmentData = [
     user_id:1
   },
   {
+    appnt_date: '20210701',
+    appnt_time: '1310',
+    appnt_for_whom: 'Self',
+    appnt_with_whom: 'Dr Sam',
+    appnt_location: '26 Vanzuilecom Street Kojonup, Western Australia, 6395',
+    appnt_note:'Bring your liscense',
+    user_id:1
+  },
+  {
+    appnt_date: '20210701',
+    appnt_time: '1310',
+    appnt_for_whom: 'Friend',
+    appnt_with_whom: 'Dr Sam',
+    appnt_location: '26 Vanzuilecom Street Kojonup, Western Australia, 6395',
+    appnt_note:'Bring your liscense',
+    user_id:1
+  },
+  {
     appnt_date: '20211001',
     appnt_time: '1220',
     appnt_for_whom: 'Friend',
