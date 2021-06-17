@@ -13,6 +13,7 @@ router.get('/new', withAuth, async (request, response) => {
 });
 
 router.get('/daily-itinerary', withAuth, async (request, response) => {
+  console.log('Appointment Routes - daily-itinerary ', request.query);
   try {
     const dbAppointmentData = await Appointment.findAll({
     });
@@ -29,36 +30,21 @@ router.get('/daily-itinerary', withAuth, async (request, response) => {
   }
 });
 router.get('/search-appointments', withAuth, async (request, response) => {
-  console.log('Appointment Routes -search appointment');
+  console.log('Appointment Routes - search appointment');
   try {
 
-    response.render('search-appointments', {
-      loggedIn: request.session.loggedIn,
-    });
-
-  } catch (error) {
-    response.status(500).json(error);
-  }
-});
-router.get('/view-appointments', withAuth, async (request, response) => {
-  try {
-
-    const dbAppointmentData = await Appointment.findAll({
+    const dbAppointmentSearchData = await Appointment.findAll({
       attributes: ['appnt_for_whom']
     });
-    const searchDateFrom = request.query.startDate;
-    const searchDateTo = request.query.endDate;
 
-    const appointments = dbAppointmentData.map((appointmentData) =>
+    const appointments = dbAppointmentSearchData.map((appointmentData) =>
       appointmentData.get({ plain: true })
     );
-
     const appointmentsForWhomUnique = [... new Set(appointments.map((appointmentData) =>
       appointmentData.appnt_for_whom
     ))];
 
     appointmentsForWhomUnique.sort();
-
     response.render('search-appointments', {
       appointmentsForWhomUnique,
       loggedIn: request.session.loggedIn,
@@ -71,8 +57,8 @@ router.get('/view-appointments', withAuth, async (request, response) => {
 router.get('/view-appointments', withAuth, async (request, response) => {
   console.log('Appointment Routes - view appointment ', request.query);
   try {
-    const dbAppointmentData = await Appointment.findAll({
-    });
+    const dbAppointmentData = await Appointment.findAll();
+
     const searchDateFrom = request.query.startDate;
     const searchDateTo = request.query.endDate;
     const searchAppntForWhom = request.query.appntForWhom;
@@ -83,9 +69,9 @@ router.get('/view-appointments', withAuth, async (request, response) => {
       if (searchAppntForWhom != '') {
         appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
       }
-    }else if (searchAppntForWhom != ''){
+    } else if (searchAppntForWhom != '') {
       appointmentsFiltered = dbAppointmentData.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
-    }else {
+    } else {
       appointmentsFiltered = dbAppointmentData;
     }
 
@@ -94,13 +80,6 @@ router.get('/view-appointments', withAuth, async (request, response) => {
 
     response.render('appointment', { appointments, loggedIn: request.session.loggedIn, });
 
-    const appointmentsFiltered = dbAppointmentData.filter(appntDate => appntDate.appnt_date >= searchDateFrom && appntDate.appnt_date <= searchDateTo);
-
-    const appointments = appointmentsFiltered.sort((a,b) => new Date(a.appnt_date) - new Date(b.appnt_date)).map((appointmentData) =>
-    appointmentData.get({ plain: true }));
-
-    response.render('appointment', {appointments, loggedIn: request.session.loggedIn, });
-    
   } catch (error) {
     response.status(500).json(error);
   }
