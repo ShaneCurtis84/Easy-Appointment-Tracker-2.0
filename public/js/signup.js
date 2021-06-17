@@ -1,3 +1,6 @@
+const body = document.querySelector("body");
+body.setAttribute("style", "display: flex; flex-direction: column;");
+
 const signupFormHandler = async (event) => {
   event.preventDefault();
 
@@ -32,10 +35,4 @@ const signupFormHandler = async (event) => {
   }
 };
 
-const loginFormHandler = async (event) => {
-  event.preventDefault();
-  document.location.replace('/login');
-}
-
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);

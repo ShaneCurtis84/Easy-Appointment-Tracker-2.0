@@ -1,3 +1,6 @@
+const body = document.querySelector("body");
+body.setAttribute("style", "display: flex; flex-direction: column;");
+
 const searchAppointmentsFormHandler = async (event) => {
     event.preventDefault();
     console.log('searchAppointmentsFormHandler');
@@ -21,11 +24,9 @@ const searchAppointmentsFormHandler = async (event) => {
             searchDateTo = (year +1) + '-' + month + '-' + day;
         }
     }
-
     if (searchDateTo < searchDateFrom) {
         alert('Date to search to cannot be before the search from date');
     }
-
     // partial page reload fetch cant redirect to another location
     console.log('data' + searchDateFrom +  ' ' +  searchDateTo + ' ' + appointmentForWhom)
     document.location.replace(`/appointment/view-appointments?startDate=${searchDateFrom}&endDate=${searchDateTo}&appntForWhom=${appointmentForWhom}`);

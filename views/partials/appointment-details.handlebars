@@ -1,4 +1,22 @@
-<section class = "card">
-Appointment date is {{format_date appnt_date}} and time is {{appnt_time}}
-Appointment is for {{appnt_for_whom}} and with {{appnt_with_whom}}
-</section>
+<article class="column is-one-quarter card-columns-nested">
+    <div class="card-main">
+        <div class="card-header">
+            <div class="card-header-title">
+                <p class="my-3 is-flex is-flex-wrap-wrap"><span class="has-text-weight-semibold">{{format_long_date appnt_date}}</span></p>
+                <p class="my-3 is-flex is-flex-wrap-wrap"><span class="has-text-weight-semibold">{{format_appointment_time appnt_time}}</span></p>
+            </div>
+        </div>
+        <div class="card-content">
+            <p class="my-3"><span class="has-text-weight-semibold">With:</span> {{appnt_with_whom}}</p>
+            <p class="my-3"><span class="has-text-weight-semibold">For Whom:</span> {{appnt_for_whom}}</p>
+            <p class="my-3"><span class="has-text-weight-semibold">Address:</span> {{appnt_location}}</p>
+            <p class="my-3"><span class="has-text-weight-semibold">Notes:</span> {{appnt_note}}</p>
+        </div>
+        <footer class="card-footer">
+            <a class="card-footer-item edit-btn" href="/appointment/edit/{{id}}">
+                <div>Edit</div>
+            </a>
+            <button class="card-footer-item delete-btn" data-appointment-index="0">Delete</button>
+        </footer>
+    </div>
+</article>
