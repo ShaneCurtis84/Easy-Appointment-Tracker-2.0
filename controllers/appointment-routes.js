@@ -16,6 +16,9 @@ router.get('/daily-itinerary', withAuth, async (request, response) => {
   console.log('Appointment Routes - daily-itinerary ', request.query);
   try {
     const dbAppointmentData = await Appointment.findAll({
+      where: {
+        user_id: request.session.user_id,
+      },
     });
 
     const appointments = dbAppointmentData.map((appointmentData) =>
@@ -29,6 +32,32 @@ router.get('/daily-itinerary', withAuth, async (request, response) => {
     response.status(500).json(error);
   }
 });
+
+// Get all the appointments
+router.get('/view-all-appointments', withAuth, async (request, response) => {
+  try {
+    const dbAppointmentData = await Appointment.findAll({
+      where: {
+        user_id: request.session.user_id,
+      },
+      order: [
+        ['appnt_date', 'ASC'],
+        ['appnt_time', 'ASC'],
+      ],
+    });
+
+    const appointments = dbAppointmentData.map((appointmentData) =>
+      appointmentData.get({ plain: true })
+    );
+    response.render('appointment', {
+      appointments,
+      loggedIn: request.session.loggedIn,
+    });
+  } catch (error) {
+    response.status(500).json(error);
+  }
+});
+
 router.get('/search-appointments', withAuth, async (request, response) => {
   console.log('Appointment Routes - search appointment');
   try {
@@ -54,6 +83,7 @@ router.get('/search-appointments', withAuth, async (request, response) => {
     response.status(500).json(error);
   }
 });
+
 router.get('/view-appointments', withAuth, async (request, response) => {
   console.log('Appointment Routes - view appointment ', request.query);
   try {
@@ -84,6 +114,7 @@ router.get('/view-appointments', withAuth, async (request, response) => {
     response.status(500).json(error);
   }
 });
+
 router.get('/:id', async (request, response) => {
   try {
     const dbAppointmentData = await Appointment.findByPk(request.params.id, {

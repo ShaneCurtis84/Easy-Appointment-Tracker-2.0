@@ -1,4 +1,12 @@
-<p>in appointment handler</p>
-{{#each appointments as | appointment|}}
-{{> appointment-details}}
-{{/each}}
+<section class="appointment-cards is-block mx-3">
+    <h3 class="has-text-grey-dark has-text-weight-semibold is-size-3 mx-3 my-5">Appointments:</h3>
+    {{#if appointments}}
+    <article class="columns is-12 card-columns">
+        {{#each appointments as | appointment|}}
+        {{> appointment-details}}
+        {{/each}}
+    </article>
+    {{else}}
+    <h4 class="is-size-4 mx-3">No appointments have been currently saved.</h4>
+    {{/if}}
+</section>

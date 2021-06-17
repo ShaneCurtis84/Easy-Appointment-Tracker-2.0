@@ -6,6 +6,7 @@ router.get('/', withAuth, async (request, response) => {
     try {
         response.render('dashboard', {
             loggedIn: request.session.loggedIn,
+            username: request.session.username,
         });
     } catch (error) {
         response.status(500).json(err);

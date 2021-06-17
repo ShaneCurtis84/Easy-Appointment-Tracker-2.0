@@ -2,30 +2,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <title>Easee Appointment Tracker (EATen)</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Easee Appointment Tracker</title>
+  <link rel="icon" href="./images/icon.png" type="image/png" sizes="16x16">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="/css/jass.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
-<body>
-  <header>
-    <h1>Welcome to EAT - Easee Appointment Tracker</h1>
+<body class="has-background-info-light">
+  <header class="header has-background-white is-size-2 px-4 pt-1 ">
+    <h1 class="has-text-grey-dark has-text-weight-semibold is-inline-flex">
+      <a class="has-text-grey-dark" href="/">
+        <span class="app-icon"></span>
+        <span class="site-title pt-1">Easee Appointment Tracker</span>
+      </a>
+    </h1>
+    <nav class="pt-4">
+      <a href="/"><button class="button is-info px-5">Home</button></a>
+      <a href="/dashboard"><button class="button is-info px-5">Dashboard</button></a>
+      {{#if loggedIn}}
+      <button id="logout" class="button is-info px-5">Logout</button>
+      {{else}}
+      <a href="/login"><button class="button is-info px-5">Login</button></a>
+      {{/if}}
+    </nav>
   </header>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/dashboard">Dashboard</a>
-    {{#if loggedIn}}
-    <button id="logout" class="btn-no-style">Logout</button>
-    {{else}}
-    <a href="/login">Login</a>
-    {{/if}}
-  </nav>
-  <main>
+  <main class="container mb-5 p-4">
     <div class="main">
       {{{body}}}
     </div>
