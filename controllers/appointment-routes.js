@@ -59,23 +59,35 @@ router.get('/view-all-appointments', withAuth, async (request, response) => {
 });
 
 router.get('/search-appointments', withAuth, async (request, response) => {
-  console.log('Appointment Routes - search appointment');
+  console.log('Appointment Routes - search appointment', request.session.user_id);
   try {
 
     const dbAppointmentSearchData = await Appointment.findAll({
-      attributes: ['appnt_for_whom']
+      where: {
+        user_id: request.session.user_id,
+      },
+      attributes: ['appnt_for_whom', 'appnt_with_whom']
     });
 
     const appointments = dbAppointmentSearchData.map((appointmentData) =>
       appointmentData.get({ plain: true })
     );
+
     const appointmentsForWhomUnique = [... new Set(appointments.map((appointmentData) =>
       appointmentData.appnt_for_whom
     ))];
 
+    const appointmentsWithWhomUnique = [... new Set(appointments.map((appointmentData) =>
+      appointmentData.appnt_with_whom
+    ))];
+
     appointmentsForWhomUnique.sort();
+
+    appointmentsWithWhomUnique.sort();
+
     response.render('search-appointments', {
       appointmentsForWhomUnique,
+      appointmentsWithWhomUnique,
       loggedIn: request.session.loggedIn,
     });
 
@@ -87,22 +99,28 @@ router.get('/search-appointments', withAuth, async (request, response) => {
 router.get('/view-appointments', withAuth, async (request, response) => {
   console.log('Appointment Routes - view appointment ', request.query);
   try {
-    const dbAppointmentData = await Appointment.findAll();
+    const dbAppointmentData = await Appointment.findAll({
+      where: {
+        user_id: request.session.user_id,
+      },
+    });
 
-    const searchDateFrom = request.query.startDate;
-    const searchDateTo = request.query.endDate;
-    const searchAppntForWhom = request.query.appntForWhom;
+    const searchDateFrom = request.query.searchDateFrom;
+    const searchDateTo = request.query.searchDateTo;
+    const searchAppointmentForWhom = request.query.searchAppointmentForWhom;
+    const searchAppointmentWithWhom = request.query.searchAppointmentWithWhom;
 
-    let appointmentsFiltered = {};
+    let appointmentsFiltered = dbAppointmentData;
     if (searchDateFrom !== '') {
       appointmentsFiltered = dbAppointmentData.filter(appntDate => appntDate.appnt_date >= searchDateFrom && appntDate.appnt_date <= searchDateTo);
-      if (searchAppntForWhom != '') {
-        appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
-      }
-    } else if (searchAppntForWhom != '') {
-      appointmentsFiltered = dbAppointmentData.filter(appnt => appnt.appnt_for_whom === searchAppntForWhom);
-    } else {
-      appointmentsFiltered = dbAppointmentData;
+    }
+
+    if (searchAppointmentForWhom != '') {
+      appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_for_whom === searchAppointmentForWhom);
+    }
+
+    if (searchAppointmentWithWhom != '') {
+      appointmentsFiltered = appointmentsFiltered.filter(appnt => appnt.appnt_with_whom === searchAppointmentWithWhom);
     }
 
     const appointments = appointmentsFiltered.sort((firstAppnt, secondAppnt) => new Date(firstAppnt.appnt_date) - new Date(secondAppnt.appnt_date)).map((appointmentData) =>
