@@ -32,7 +32,13 @@
             <div class="is-size-5 field">
                 <label class="has-text-weight-semibold label" for="appointment-name-input">Appointment For Whom:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-name-input" name="appointment-name-input" placeholder="Enter Who the Appointment is For">
+                    <input type="text" class="input" id="appointment-name-input" name="appointment-name-input"
+                        placeholder="Enter Who the Appointment is For" list="appnts_for_whom">
+                    <datalist id="appnts_for_whom">
+                        {{#each appointmentsForWhomUnique }}
+                        <option value="{{this}}"></option>
+                        {{/each}}
+                    </datalist>
                     <span class="icon is-small is-left">
                         <i class="fas fa-user"></i>
                     </span>
@@ -41,7 +47,13 @@
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="person-appointment-with">Appointment With:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="person-appointment-with" name="person-appointment-with" placeholder="Enter Who the Appointment is With">
+                    <input type="text" class="input" id="person-appointment-with" name="person-appointment-with"
+                        placeholder="Enter Who the Appointment is With" list="appnts_with_whom">
+                    <datalist id="appnts_with_whom">
+                        {{#each appointmentsWithWhomUnique}}
+                        <option value="{{this}}"></option>
+                        {{/each}}
+                    </datalist>
                     <span class="icon is-small is-left">
                         <i class="fas fa-user"></i>
                     </span>
@@ -50,7 +62,13 @@
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-location">Appointment Location:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-location" name="appointment-location" placeholder="Enter Address of Appointment">
+                    <input type="text" class="input" id="appointment-location" name="appointment-location"
+                        placeholder="Enter Address of Appointment" list="appnts_location">
+                    <datalist id="appnts_location">
+                        {{#each appointmentsLocationUnique}}
+                        <option value="{{this}}"></option>
+                        {{/each}}
+                    </datalist>
                     <span class="icon is-small is-left">
                         <i class="fas fa-map-marker"></i>
                     </span>
