@@ -5,7 +5,34 @@ const withAuth = require('../utils/auth');
 // Get the add new appointment page
 router.get('/new', withAuth, async (request, response) => {
   try {
-    response.render('add-new-appointment', { loggedIn: request.session.loggedIn });
+    const dbAppointmentSearchData = await Appointment.findAll({
+      where: {
+        user_id: request.session.user_id,
+      },
+      attributes: ['appnt_for_whom', 'appnt_with_whom', 'appnt_location']
+    });
+
+    const appointments = dbAppointmentSearchData.map((appointmentData) =>
+      appointmentData.get({ plain: true })
+    );
+
+    const appointmentsForWhomUnique = [... new Set(appointments.map((appointmentData) =>
+      appointmentData.appnt_for_whom
+    ))];
+
+    const appointmentsWithWhomUnique = [... new Set(appointments.map((appointmentData) =>
+      appointmentData.appnt_with_whom
+    ))];
+
+    const appointmentsLocationUnique = [... new Set(appointments.map((appointmentData) =>
+      appointmentData.appnt_location
+    ))];
+    response.render('add-new-appointment', {
+      appointmentsForWhomUnique,
+      appointmentsWithWhomUnique,
+      appointmentsLocationUnique,
+      loggedIn: request.session.loggedIn
+    });
   } catch (err) {
     console.log(err);
     response.status(500).json(err);
