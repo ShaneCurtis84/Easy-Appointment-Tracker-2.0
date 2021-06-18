@@ -12,6 +12,36 @@ router.get('/new', withAuth, async (request, response) => {
   }
 });
 
+// Get the edit appointment page
+router.get('/edit/:id', withAuth, async (request, response) => {
+  try {
+    const dbAppointmentData = await Appointment.findByPk(request.params.id, {
+      where: {
+        id: request.params.id,
+      },
+      attributes: [
+        'id',
+        'appnt_date',
+        'appnt_time',
+        'appnt_for_whom',
+        'appnt_with_whom',
+        'appnt_location',
+        'appnt_note',
+        'created_at',
+      ],
+    });
+    if (!dbAppointmentData) {
+      response.status(404).json({ message: 'No appointment found with that id' });
+      return;
+    }
+    const appointment = dbAppointmentData.get({ plain: true });
+    response.render('edit-appointment', { appointment, loggedIn: request.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    response.status(500).json(err);
+  }
+});
+
 router.get('/daily-itinerary', withAuth, async (request, response) => {
   console.log('Appointment Routes - daily-itinerary ', request.query);
   try {
