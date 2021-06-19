@@ -1,0 +1,65 @@
+{{!-- The edit appointment page template --}}
+<link rel="stylesheet" href="/flatpickr/flatpickr.css">  
+<link rel="stylesheet" href="/flatpickr/themes/light.css">  
+<section>
+    <section class="success-message box is-block has-text-centered mx-3 notification is-success is-hidden">
+        <h4 class="is-size-5 mb-2">Appointment entry updated!</h4>
+        <button class="dashboard button is-link is-light my-2">Return to dashboard</button>
+    </section>
+    <section class="appointment-date box is-block mx-3">
+        <h3 class="has-text-grey-dark is-size-3">Edit Appointment</h3>
+        <form>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-date">Appointment Date:</label>
+                <input type="text" class="input" id="appointment-date" placeholder="Appointment Date" value="{{appointment.appnt_date}}" data-input>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-time">Appointment Time:</label>
+                <input type="text" class="input" id="appointment-time" placeholder="Appointment Time" value="{{format_appointment_time appointment.appnt_time}}" data-input>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-for">Appointment For:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="appointment-for" name="appointment-for" placeholder="Enter Who the Appointment is For" value="{{appointment.appnt_for_whom}}">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-with">Appointment With:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="appointment-with" name="appointment-with" placeholder="Enter Who the Appointment is With" value="{{appointment.appnt_with_whom}}">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-location">Appointment Location:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="appointment-location" name="appointment-location" placeholder="Enter Address of Appointment" value="{{appointment.appnt_location}}">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-map-marker"></i>
+                    </span>
+                </div>
+            </div>
+            <div id="map"></div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-notes">Notes:</label>
+                <textarea type="text" class="textarea" id="appointment-notes" name="appointment-notes" placeholder="Notes">{{appointment.appnt_note}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="button is-success px-6" id="edit-appointment-button" type="submit">Update</button>
+            </div>
+            <div class="error-message"></div>
+        </form>
+    </section>
+</section>
+<script src="/flatpickr/flatpickr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC856BBT5rwwkraEtK2Ki5obfAUgw1M2KQ&libraries=places&v=weekly"></script>
+<script src="/../js/googleMapsAPi.js"></script>
+<script src="/../js/edit-appointment.js"></script>

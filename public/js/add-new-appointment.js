@@ -278,7 +278,7 @@ const addAppointmentFormHandler = async (event) => {
         numberOfElementsShown(errorMessage, 0);
         let errorMessageListItem;
         if (!appointmentWhom) {
-            errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment For Whom</li>`: errorMessageListItem = `<li>• Appointment For Whom</li>`;
+            errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment For</li>`: errorMessageListItem = `<li>• Appointment For</li>`;
         }
         if (!appointmentWith) {
             errorMessageListItem ? errorMessageListItem = errorMessageListItem + `<li>• Appointment With</li>` : errorMessageListItem = `<li>• Appointment With</li>`;

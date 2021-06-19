@@ -106,10 +106,16 @@ router.get('/view-all-appointments', withAuth, async (request, response) => {
         ['appnt_time', 'ASC'],
       ],
     });
+    
+    const month = ('0' + (new Date().getMonth() + 1)).slice(-2);
+    const date = ('0' + (new Date().getDate())).slice(-2);
+    const today = `${new Date().getFullYear()}-${month}-${date}`;
 
-    const appointments = dbAppointmentData.map((appointmentData) =>
+    const dbAppointmentDataCurrent = dbAppointmentData.filter(appointments => appointments.appnt_date >= `${today}`);
+    const appointments = dbAppointmentDataCurrent.map((appointmentData) =>
       appointmentData.get({ plain: true })
     );
+
     response.render('appointment', {
       appointments,
       loggedIn: request.session.loggedIn,
