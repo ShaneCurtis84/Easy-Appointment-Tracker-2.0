@@ -32,6 +32,7 @@ app.engine('handlebars', handleBars.engine);
 app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/flatpickr', express.static(path.join(__dirname, '/node_modules/flatpickr/dist/')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
