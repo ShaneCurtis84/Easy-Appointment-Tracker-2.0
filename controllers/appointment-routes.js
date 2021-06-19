@@ -72,9 +72,13 @@ router.get('/edit/:id', withAuth, async (request, response) => {
 router.get('/daily-itinerary', withAuth, async (request, response) => {
   console.log('Appointment Routes - daily-itinerary ', request.query);
   try {
+    todaysDate = new Date();
+    const today = todaysDate.getFullYear() + '-'  + ('0' + (todaysDate.getMonth() +1)).slice(-2) + '-' + ('0' +todaysDate.getDate()).slice(-2);
+    
     const dbAppointmentData = await Appointment.findAll({
       where: {
         user_id: request.session.user_id,
+        appnt_date: today,
       },
     });
 
