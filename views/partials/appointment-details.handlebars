@@ -2,8 +2,10 @@
     <div class="card-main">
         <div class="card-header">
             <div class="card-header-title">
-                <p class="my-3 is-flex is-flex-wrap-wrap"><span class="has-text-weight-semibold">{{format_long_date appnt_date}}</span></p>
-                <p class="my-3 is-flex is-flex-wrap-wrap"><span class="has-text-weight-semibold">{{format_appointment_time appnt_time}}</span></p>
+                <p class="my-3 is-flex is-flex-wrap-wrap"><span class="has-text-weight-semibold">{{format_long_date
+                        appnt_date}}</span></p>
+                <p class="my-3 is-flex is-flex-wrap-wrap"><span
+                        class="has-text-weight-semibold">{{format_appointment_time appnt_time}}</span></p>
             </div>
         </div>
         <div class="card-content">
@@ -16,7 +18,9 @@
             <a class="card-footer-item edit-btn" href="/appointment/edit/{{id}}">
                 <div>Edit</div>
             </a>
-            <button class="card-footer-item delete-btn" data-appointment-index="0">Delete</button>
+            <a class="card-footer-item delete-btn" href="/api/appointments/delete/{{id}}">
+                <div>Delete</div>
+            </a>
         </footer>
     </div>
 </article>

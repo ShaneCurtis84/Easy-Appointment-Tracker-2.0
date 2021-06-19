@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Appointment } = require('../../models');
 const withAuth = require('../../utils/auth');
-
+console.log('API Appointment Routes beginning');
 // Get all appointments
 router.get('/', async (request, response) => {
     try {
@@ -25,6 +25,26 @@ router.get('/', async (request, response) => {
         console.log(err);
         response.status(500).json(err);
     }   
+});
+
+// Delete appointment
+router.get('/delete/:id', async (request, response) => {
+  console.log('API Appointment Routes Delete', request.headers.referer);
+  try {
+    const dbAppointmentData = await Appointment.destroy({
+      where: {
+        id: request.params.id,
+      },
+    });
+
+    if (!dbAppointmentData) {
+      response.status(404).json({ message: 'No Blog data for id ' + request.params.id + ' was found, so it was not deleted' });
+      return;
+    }
+    response.redirect(request.headers.referer);
+  } catch (error) {
+    response.status(500).json(error);
+  }
 });
 
 // Create new appointment
