@@ -5,6 +5,7 @@ const withAuth = require('../utils/auth');
 // Get the add new appointment page
 router.get('/new', withAuth, async (request, response) => {
   try {
+    // Find all Appointment information in the database with the sepcified information
     const dbAppointmentSearchData = await Appointment.findAll({
       where: {
         user_id: request.session.user_id,
@@ -27,12 +28,8 @@ router.get('/new', withAuth, async (request, response) => {
     const appointmentsLocationUnique = [... new Set(appointments.map((appointmentData) =>
       appointmentData.appnt_location
     ))];
-    
-    const today = new Date();
-    const currentTime = today.getHours() + ':' + today.getMinutes();
 
     response.render('add-new-appointment', {
-      currentTime,
       appointmentsForWhomUnique,
       appointmentsWithWhomUnique,
       appointmentsLocationUnique,
@@ -47,6 +44,7 @@ router.get('/new', withAuth, async (request, response) => {
 // Get the edit appointment page
 router.get('/edit/:id', withAuth, async (request, response) => {
   try {
+    // Finding appointment by primary key with the specified information
     const dbAppointmentData = await Appointment.findByPk(request.params.id, {
       where: {
         id: request.params.id,
