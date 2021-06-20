@@ -10,7 +10,7 @@ An easy to use appointment tracking system for people looking for a quick and se
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Assets](#assets)
-4. [Technologies](#Technologies)
+4. [Technologies](#technologies)
 5. [License](#license)
 6. [Contributing](#contributing)
 7. [Tests](#tests)
@@ -57,26 +57,26 @@ The following images shows the functionality of the application:
 - JavaScript
 
 ## License
-Copyright © 2021 [Trushil](https://github.com/TrushilBudhia)
-
 This project is [MIT](./LICENSE) licensed
 
 ## Contributing
 Contributions, issues and feature requests are welcome.
 
-Feel free to check the [issues page](https://github.com/TrushilBudhia/Tech-Blog/issues) if you want to contribute.
+Feel free to check the [issues page](https://github.com/ShaneCurtis84/Easy-Appointment-Tracker-2.0/issues) if you want to contribute.
 
 ## Tests
 There are no tests currently for this application.
 
 ## Collaborators
 [Shane Curtis](https://github.com/ShaneCurtis84)
+
 [Susanne Bilney](https://github.com/Susanne85)
+
 [Trushil Budhia](https://github.com/TrushilBudhia)
 
-## Questions
-For any questions, please contact the author:
 
-- Github: [@Trushil](https://github.com/TrushilBudhia)
-- Email: trushil.budhia@gmail.com
+## Questions
+For any questions, please contact the authors:
+
+- Github: [@Shane](https://github.com/ShaneCurtis84), [@Susanne](https://github.com/Susanne85), [@Trushil](https://github.com/TrushilBudhia)
 
