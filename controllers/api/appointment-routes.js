@@ -29,7 +29,7 @@ router.get('/', async (request, response) => {
 
 // Delete appointment
 router.get('/delete/:id', async (request, response) => {
-  console.log('API Appointment Routes Delete', request.headers.referer);
+  //console.log('API Appointment Routes Delete', request.headers.referer);
   try {
     const dbAppointmentData = await Appointment.destroy({
       where: {
@@ -49,9 +49,9 @@ router.get('/delete/:id', async (request, response) => {
 
 // Create new appointment
 router.post('/', async (request, response) => {
-    console.log('new Appointment', request.body);
+    //console.log('new Appointment', request.body);
     try {
-        const dbAppointmentData = Appointment.create({
+        const dbAppointmentData = await Appointment.create({
             appnt_date: request.body.appointmentDate,
             appnt_time: request.body.appointmentTime,
             appnt_for_whom: request.body.appointmentWhom,
