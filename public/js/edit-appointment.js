@@ -56,7 +56,7 @@ const editAppointmentHandler = async (event) => {
             body: JSON.stringify({ appointmentDate, appointmentTime, appointmentFor, appointmentWith, appointmentLocation, appointmentNotes }),
             headers: { 'Content-Type': 'application/json' },
         });
-        // Redirecting user to the dashboard if response is ok
+        // Invoke the successMessage function if the response is ok
         if (response.ok) {
             successMessage();
         } else {

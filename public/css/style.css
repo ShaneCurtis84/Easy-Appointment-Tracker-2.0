@@ -155,6 +155,7 @@ a:hover {
 
 .delete-btn:hover {
   background-color: #ee2222;
+  color: var(--light);
   height: 100%;
 }
 
