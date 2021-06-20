@@ -7,6 +7,7 @@ flatpickr("#appointment-date", {
     altInput: true,
     altFormat: "j F Y",
     dateFormat: "Y-m-d",
+    defaultDate: "today",
     minDate: "today",
 });
 // Adding the flatpickr Time Picker to the appointment time input
