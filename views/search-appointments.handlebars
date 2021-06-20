@@ -3,15 +3,15 @@
     <form class="form search-appointment-form my-2">
         <div class="form-group">
             <label class="label is-size-5" for="date-from">Date from:</label>
-            <input class="input" type="date" id="date-from" />
+            <input class="input is-info" type="date" id="date-from" />
         </div>
         <div class="form-group my-2">
             <label class="label is-size-5" for="date-to">Date to:</label>
-            <input class="input" type="date" id="date-to" />
+            <input class="input is-info" type="date" id="date-to" />
         </div>
         <div class="form-group my-2">
             <label class="label is-size-5" for="appointment-by-whom">Who is the appointment for:</label>
-            <input class="input" type="text" id="appointment-for-whom" list="appnts_for_whom" />
+            <input class="input is-info" type="text" id="appointment-for-whom" list="appnts_for_whom" />
             <datalist id="appnts_for_whom">
                 {{#each appointmentsForWhomUnique }}
                 <option value="{{this}}"></option>
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group my-2">
             <label class="label is-size-5" for="appointment-with-whom">Who is the appointment with:</label>
-            <input class="input" type="text" id="appointment-with-whom" list="appnts_with_whom" />
+            <input class="input is-info" type="text" id="appointment-with-whom" list="appnts_with_whom" />
             <datalist id="appnts_with_whom">
                 {{#each appointmentsWithWhomUnique}}
                 <option value="{{this}}"></option>
