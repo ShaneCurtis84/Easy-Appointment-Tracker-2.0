@@ -1,38 +1,26 @@
+<link rel="stylesheet" href="/flatpickr/flatpickr.css">
+<link rel="stylesheet" href="/flatpickr/themes/light.css">
 <section>
     <section class="success-message box is-block has-text-centered mx-3 notification is-success is-hidden">
-        <h4 class="is-size-5 mb-2">Appointment added!</h4>
-        <button class="new-appointment button is-link is-light my-2">Add another appointment</button><br>
+        <h4 class="is-size-5 mb-2">Appointment added</h4>
+        <button class="add-appointment button is-link is-light my-2">Add another Appointment</button>
         <button class="dashboard button is-link is-light my-2">Return to dashboard</button>
     </section>
     <section class="appointment-date box is-block mx-3">
-        <progress class="progress is-info" value="0" max="100">0%</progress>
-        <h3 class="has-text-weight-semibold">Add Appointment:</h3>
-        <h4 class="has-text-weight-semibold is-flex is-flex-wrap-wrap is-justify-content-center">Select the month:</h4>
-        <article class="months is-flex is-flex-wrap-wrap is-justify-content-center">
-            <!-- The month buttons will be added here from JavaScript -->
-        </article>
-        <article class="days is-flex is-flex-wrap-wrap is-justify-content-center column is-10 is-offset-1">
-            <!-- The day buttons will be added here from JavaScript -->
-        </article>
-        <article class="appointment-hour has-text-centered is-block">
-            <!-- The hour input field will be added here from JavaScript -->
-        </article>
-        <article class="appointment-minute has-text-centered is-block mt-5">
-            <!-- The minute input field will be added here from JavaScript -->
-        </article>
-        <article class="date-description mt-5">
-            <!-- Date the user has chosen for the appointment will be displayed in this article -->
-        </article>
-    </section>
-    <!-- This section below deals with user inputting the details of the appointments beyond date -->
-    <section class="appointment-details box is-block mx-3 is-hidden">
-        <progress class="progress is-info" value="50" max="100">50%</progress>
-        <h3 class="has-text-grey-dark is-size-3">Appointment Information:</h3>
+        <h3 class="has-text-grey-dark is-size-3">Add Appointment</h3>
         <form>
             <div class="is-size-5 my-4 field">
-                <label class="has-text-weight-semibold label" for="appointment-name-input">Appointment For:</label>
+                <label class="has-text-weight-semibold label" for="appointment-date">Appointment Date:</label>
+                <input type="text" class="input" id="appointment-date" placeholder="Appointment Date" value="{{currentDate}}" data-input>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-time">Appointment Time:</label>
+                <input type="text" class="input" id="appointment-time" placeholder="Appointment Time" value="{{currentTime}}" data-input>
+            </div>
+            <div class="is-size-5 my-4 field">
+                <label class="has-text-weight-semibold label" for="appointment-whom">Appointment For:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-name-input" name="appointment-name-input"
+                    <input type="text" class="input" id="appointment-whom" name="appointment-whom"
                         placeholder="Enter Who the Appointment is For" list="appnts_for_whom">
                     <datalist id="appnts_for_whom">
                         {{#each appointmentsForWhomUnique }}
@@ -45,9 +33,9 @@
                 </div>
             </div>
             <div class="is-size-5 my-4 field">
-                <label class="has-text-weight-semibold label" for="person-appointment-with">Appointment With:</label>
+                <label class="has-text-weight-semibold label" for="appointment-with">Appointment With:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="person-appointment-with" name="person-appointment-with"
+                    <input type="text" class="input" id="appointment-with" name="appointment-with"
                         placeholder="Enter Who the Appointment is With" list="appnts_with_whom">
                     <datalist id="appnts_with_whom">
                         {{#each appointmentsWithWhomUnique}}
@@ -76,10 +64,14 @@
             </div>
             <div id="map"></div>
             <div class="is-size-5 my-4 field">
-                <label class="has-text-weight-semibold label" for="notes">Notes:</label>
-                <textarea type="text" class="textarea" id="notes" name="notes" placeholder="Notes"></textarea>
+                <label class="has-text-weight-semibold label" for="appointment-notes">Notes:</label>
+                <textarea type="text" class="textarea" id="appointment-notes" name="appointment-notes"
+                    placeholder="Notes"></textarea>
             </div>
-            <input class="submit-appointment button is-success mt-3 px-5" type="submit" value="Submit">
+
+            <div class="form-group">
+                <button class="button is-success px-6" id="add-appointment-button" type="submit">Submit</button>
+            </div>
             <div class="error-message notification is-danger my-4 is-hidden">
                 Enter details for:
                 <ul class="error"></ul>
@@ -87,7 +79,7 @@
         </form>
     </section>
 </section>
-
+<script src="/flatpickr/flatpickr.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC856BBT5rwwkraEtK2Ki5obfAUgw1M2KQ&libraries=places&v=weekly"></script>

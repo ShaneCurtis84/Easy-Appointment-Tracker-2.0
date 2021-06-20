@@ -49,14 +49,15 @@ router.get('/delete/:id', async (request, response) => {
 
 // Create new appointment
 router.post('/', async (request, response) => {
+    console.log('new Appointment', request.body);
     try {
         const dbAppointmentData = Appointment.create({
             appnt_date: request.body.appointmentDate,
             appnt_time: request.body.appointmentTime,
             appnt_for_whom: request.body.appointmentWhom,
             appnt_with_whom: request.body.appointmentWith, 
-            appnt_location: request.body.appointmentAddress, 
-            appnt_note: request.body.notesValue,
+            appnt_location: request.body.appointmentLocation, 
+            appnt_note: request.body.appointmentNotes,
             user_id: request.session.user_id,
         });
 
