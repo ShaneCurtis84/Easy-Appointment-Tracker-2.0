@@ -11,16 +11,16 @@
         <form>
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-date">Appointment Date:</label>
-                <input type="text" class="input" id="appointment-date" placeholder="Appointment Date" value="{{currentDate}}" data-input>
+                <input type="text" class="input is-info" id="appointment-date" placeholder="Appointment Date" data-input>
             </div>
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-time">Appointment Time:</label>
-                <input type="text" class="input" id="appointment-time" placeholder="Appointment Time" value="{{currentTime}}" data-input>
+                <input type="text" class="input is-info" id="appointment-time" placeholder="Appointment Time" value="{{currentTime}}" data-input>
             </div>
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-whom">Appointment For:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-whom" name="appointment-whom"
+                    <input type="text" class="input is-info" id="appointment-whom" name="appointment-whom"
                         placeholder="Enter Who the Appointment is For" list="appnts_for_whom">
                     <datalist id="appnts_for_whom">
                         {{#each appointmentsForWhomUnique }}
@@ -35,7 +35,7 @@
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-with">Appointment With:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-with" name="appointment-with"
+                    <input type="text" class="input is-info" id="appointment-with" name="appointment-with"
                         placeholder="Enter Who the Appointment is With" list="appnts_with_whom">
                     <datalist id="appnts_with_whom">
                         {{#each appointmentsWithWhomUnique}}
@@ -50,7 +50,7 @@
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-location">Appointment Location:</label>
                 <div class="control has-icons-left">
-                    <input type="text" class="input" id="appointment-location" name="appointment-location"
+                    <input type="text" class="input is-info" id="appointment-location" name="appointment-location"
                         placeholder="Enter Address of Appointment" list="appnts_location">
                     <datalist id="appnts_location">
                         {{#each appointmentsLocationUnique}}
@@ -65,12 +65,12 @@
             <div id="map"></div>
             <div class="is-size-5 my-4 field">
                 <label class="has-text-weight-semibold label" for="appointment-notes">Notes:</label>
-                <textarea type="text" class="textarea" id="appointment-notes" name="appointment-notes"
+                <textarea type="text" class="textarea is-info" id="appointment-notes" name="appointment-notes"
                     placeholder="Notes"></textarea>
             </div>
 
             <div class="form-group">
-                <button class="button is-success px-6" id="add-appointment-button" type="submit">Submit</button>
+                <button class="button is-success px-6" id="add-appointment-button" type="submit">Add</button>
             </div>
             <div class="error-message notification is-danger my-4 is-hidden">
                 Enter details for:

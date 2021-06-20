@@ -29,11 +29,9 @@ router.get('/new', withAuth, async (request, response) => {
     ))];
     
     const today = new Date();
-    const currentDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + today.getDate();
     const currentTime = today.getHours() + ':' + today.getMinutes();
 
     response.render('add-new-appointment', {
-      currentDate,
       currentTime,
       appointmentsForWhomUnique,
       appointmentsWithWhomUnique,
