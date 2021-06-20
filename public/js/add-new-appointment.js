@@ -15,6 +15,8 @@ flatpickr("#appointment-time", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
+    defaultHour:new Date().getHours(),
+    defaultMinute:new Date().getMinutes(),
     minTime: "08:00",
     time_24hr: true
 });
