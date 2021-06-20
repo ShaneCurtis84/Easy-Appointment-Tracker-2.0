@@ -27,7 +27,14 @@ router.get('/new', withAuth, async (request, response) => {
     const appointmentsLocationUnique = [... new Set(appointments.map((appointmentData) =>
       appointmentData.appnt_location
     ))];
+    
+    const today = new Date();
+    const currentDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + today.getDate();
+    const currentTime = today.getHours() + ':' + today.getMinutes();
+
     response.render('add-new-appointment', {
+      currentDate,
+      currentTime,
       appointmentsForWhomUnique,
       appointmentsWithWhomUnique,
       appointmentsLocationUnique,
@@ -73,8 +80,8 @@ router.get('/daily-itinerary', withAuth, async (request, response) => {
   console.log('Appointment Routes - daily-itinerary ', request.query);
   try {
     todaysDate = new Date();
-    const today = todaysDate.getFullYear() + '-'  + ('0' + (todaysDate.getMonth() +1)).slice(-2) + '-' + ('0' +todaysDate.getDate()).slice(-2);
-    
+    const today = todaysDate.getFullYear() + '-' + ('0' + (todaysDate.getMonth() + 1)).slice(-2) + '-' + ('0' + todaysDate.getDate()).slice(-2);
+
     const dbAppointmentData = await Appointment.findAll({
       where: {
         user_id: request.session.user_id,
@@ -106,7 +113,7 @@ router.get('/view-all-appointments', withAuth, async (request, response) => {
         ['appnt_time', 'ASC'],
       ],
     });
-    
+
     const month = ('0' + (new Date().getMonth() + 1)).slice(-2);
     const date = ('0' + (new Date().getDate())).slice(-2);
     const today = `${new Date().getFullYear()}-${month}-${date}`;
