@@ -11,11 +11,12 @@ An easy to use appointment tracking system for people looking for a quick and se
 2. [Usage](#usage)
 3. [Assets](#assets)
 4. [Technologies](#technologies)
-5. [License](#license)
-6. [Contributing](#contributing)
-7. [Tests](#tests)
-8. [Collaborators](#collaborators)
-9. [Questions](#questions)
+5. [Planning](#planning)
+6. [License](#license)
+7. [Contributing](#contributing)
+8. [Tests](#tests)
+9. [Collaborators](#collaborators)
+10. [Questions](#questions)
 
 ## Installation
 1. To install this application clone it through GitHub using the following code in the terminal: 
@@ -54,7 +55,16 @@ The following images shows the functionality of the application:
 - [Express Handlebars](https://www.npmjs.com/package/express-handlebars)
 - [flatpickr](https://www.npmjs.com/package/flatpickr)
 - [Heroku](https://www.heroku.com/)
+- [Bulma CSS Framework](https://bulma.io/)
+- [Font Awesome (icons)](https://fontawesome.com/)
+- [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview)
+- [Google Maps JavasScript API](https://developers.google.com/maps/documentation/javascript/overview)
 - JavaScript
+
+## Planning:
+- [Press Release](https://docs.google.com/document/d/1lAA5RESKgXhbgahGP1YxLDHGO7LA8qTXGwPqubn1iC0/edit?usp=sharing)
+- [User Story Map](https://miro.com/app/board/o9J_l_vMW5U=/)
+- [Presentation](https://docs.google.com/presentation/d/1zoVdW4md6lIe7DGZ3RoNBZL2hEFLmLkF-7MQ-9AdEbk/edit?usp=sharing)
 
 ## License
 This project is [MIT](./LICENSE) licensed
